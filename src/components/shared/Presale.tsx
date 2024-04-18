@@ -15,11 +15,11 @@ import {
 import Image from 'next/image'
 const Presale = () => {
   return (
-    <div className='py-12 px-[50px] shadow-md bg-brand-black max-w-[800px] w-full space-y-8 rounded-[50px] border-brand-cyan border'>
+    <div className='p-8 mx-4 md:py-12 px-[20px] md:px-[50px] shadow-md bg-brand-black max-w-[800px] w-full space-y-8 rounded-[50px] border-brand-cyan border'>
         <h3 className='text-white text-center'>1 MGK = $0.0001</h3>
-        <p className='text-white text-center  text-[25px]'><span className='text-brand-cyan font-bold'>Amount Raised :</span> $500 / $5,000,000</p>
+        <p className='text-white flex-col flex md:flex-row gap-2 items-center text-center  text-[25px]'><span className='text-brand-cyan font-bold'>Amount Raised :</span> <span>$500 / $5,000,000</span></p>
         <Slider defaultValue={[33]} max={100} step={1} />
-        <div className='flex gap-4 items-center justify-center'>
+        <div className='flex md:flex-row flex-col gap-4 items-center justify-center'>
             <Button 
             variant={'secondary'}
             size={'sm'}
@@ -50,7 +50,7 @@ const Presale = () => {
                 <div className='absolute top-[20%] text-white right-2 z-50 bg-[#180A39]'>
                 <Select>
   <SelectTrigger className="">
-    <SelectValue placeholder="Theme" />
+    <SelectValue  />
   </SelectTrigger>
   <SelectContent>
     <SelectItem value="light">
