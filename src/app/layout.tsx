@@ -3,7 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import localFont from 'next/font/local'
 import { cn } from "@/lib/utils";
-
+import WalletLayout from "@/context/WalletLayout";
+import { Toaster } from "@/components/ui/toaster"
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -25,11 +26,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={cn(
-        inter.className,  deacon.variable
-        
-      ) }>{children}</body>
-    </html>
+
+    <WalletLayout>
+
+
+      <html lang="en">
+        <body className={cn(
+          inter.className, deacon.variable
+
+        )}>
+
+          {children}
+          <Toaster />
+          </body>
+      </html>
+    </WalletLayout>
   );
 }

@@ -1,86 +1,128 @@
-import React from 'react'
+"use client"
+import React, { useState } from 'react'
 import { Button } from '../ui/button'
-import { Slider } from "@/components/ui/slider"
-import SolanaLogo from '../icons/SolanaLogo'
-import UsdtIcon from '../icons/UsdtIcon'
+import * as web3 from '@solana/web3.js';
+
 import { Input } from "@/components/ui/input"
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-  } from "@/components/ui/select"
-  import Applogo from "@/components/icons/Logo.svg"
-import Image from 'next/image'
+
+import { useConnection, useWallet } from '@solana/wallet-adapter-react';
+import { useToast } from "@/components/ui/use-toast"
+import { BASE_URL, fetcher } from '../../../utils/fetcher'
+import useSWR from 'swr'
+import { calculateTokens } from '../../../utils/helper'
+import useSendTokens from '@/hooks/useSendTokens'
+import { Shell } from 'lucide-react'
+import SliderInfo from '../presale-components/SliderInfo'
+import RecieveTokens from '../presale-components/receive-tokens'
+import ShowSuccessModal from '../presale-components/show-success';
+import ShowErrorModal from '../presale-components/show-error';
+
 const Presale = () => {
+  const { data, error, isLoading } = useSWR(`${BASE_URL}/price?ids=SOL`, fetcher)
+  const { sendTokens, loading, isOpen, setIsOpen, transactionUrl, errorMessage, success, } = useSendTokens()
+
+  const [transacting, setTransacting] = useState(false)
+  const { connection } = useConnection();
+  const { publicKey, sendTransaction } = useWallet()
+  const [amount, setAmount] = useState<number>(null)
+  const { toast } = useToast()
+  const [txSig, setTxSig] = useState('');
+  const [amountTokens, setAmountTokens] = useState(null)
+
+  console.log('eror==>', error)
+  const TokenAddress: web3.PublicKey = `B4SQF4ctXsTZNGP1Aa6WPmMvJsgTsQY1PLjoTmVst8yE`
+  const handleTransaction = async () => {
+    if (!connection || !publicKey) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "Please Connect your wallet and try again",
+      })
+      return;
+    }
+
+    if (amount < 0.01 || amount === 0 || amount === null) {
+      toast({
+        variant: "destructive",
+        title: "Invalid Amount",
+        description: "Please enter a valid amount. Minimum Purchase is 0.01 SOl",
+      })
+      return;
+    }
+
+    const transaction = new web3.Transaction();
+    const instruction = web3.SystemProgram.transfer({
+      fromPubkey: publicKey,
+      lamports: amount * web3.LAMPORTS_PER_SOL,
+      toPubkey: TokenAddress,
+    });
+
+    transaction.add(instruction);
+
+    try {
+      const signature = await sendTransaction(transaction, connection);
+      setTxSig(signature)
+      sendTokens(amountTokens, publicKey)
+      toast({
+        title: "Deposit Successful!",
+        description: "Your token will appear in your wallet soon..",
+      })
+    }
+    catch (error) {
+      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Transaction Failed",
+        description: "There was a problem with your request.",
+      })
+    }
+    finally {
+      // setAccount('');
+      // setAmount(0);
+
+    }
+  };
+
+  const handleAmountChange = (e: any) => {
+    const tokens = calculateTokens(e.target.value, data?.data?.SOL.price);
+    setAmountTokens(tokens)
+    setAmount(e.target.value)
+  }
+
   return (
     <div className='p-8 mx-4 md:py-12 px-[20px] md:px-[50px] shadow-md bg-brand-black max-w-[800px] w-full space-y-8 rounded-[50px] border-brand-cyan border'>
-        <h3 className='text-white text-center'>1 MGK = $0.0001</h3>
-        <p className='text-white flex-col flex md:flex-row gap-2 items-center text-center  text-[25px]'><span className='text-brand-cyan font-bold'>Amount Raised :</span> <span>$500 / $5,000,000</span></p>
-        <Slider defaultValue={[33]} max={100} step={1} />
-        <div className='flex md:flex-row flex-col gap-4 items-center justify-center'>
-            <Button 
-            variant={'secondary'}
-            size={'sm'}
-            className='text-white font-bold flex gap-4 '>
-             <SolanaLogo />
-                <div>
-                <h3>Sol</h3>
-                <p className='text-sm font-normal text-brand-gray'>Sol</p>
-                </div>
-            </Button>
-            <Button
-            //  size={'sm'}
-             className='!py-6 flex gap-4'
-             variant={'secondary'}
-            >
-                <UsdtIcon />
-                <div>
-                <h3>USDT</h3>
-                <p className='text-sm font-normal text-brand-gray'>USDT</p>
-                </div>
-            </Button>
-        </div>
+      <SliderInfo />
 
-        <div className='flex flex-col space-y-4'>
-            <h3 className='text-white'>Amount you pay :</h3>
-           <div className='w-full relative'>
-           <Input type='number' placeholder='0' />
-                <div className='absolute top-[20%] text-white right-2 z-50 bg-[#180A39]'>
-                <Select>
-  <SelectTrigger className="">
-    <SelectValue  />
-  </SelectTrigger>
-  <SelectContent>
-    <SelectItem value="light">
-        <SolanaLogo />
-    </SelectItem>
-    <SelectItem value="dark">
-        <UsdtIcon />
-    </SelectItem>
-  </SelectContent>
-</Select>
-                </div>
-           </div>
+      <div className='flex flex-col space-y-4'>
+        <h3 className='text-white'>Amount you pay :</h3>
+        <div className='w-full relative'>
+          <Input type='number' value={amount} onChange={handleAmountChange} placeholder='0' />
+
         </div>
-        <div className='flex flex-col space-y-4'>
-            <h3 className='text-white'>Amount in $MGK you will receive :</h3>
-           <div className='w-full relative'>
-           <Input type='text' placeholder='0' />
-               <div className='absolute top-[20%] right-2'>
-               <Image 
-      src={Applogo}
-      width={50}
-      height={50}
-      alt="app logo"
-      />
-               </div>
-           </div>
-        </div>
-    <Button className='w-full text-white py-6'>
-        Connect Wallet
-    </Button>
+      </div>
+      <RecieveTokens amountTokens={amountTokens} />
+      <Button
+        disabled={loading}
+        onClick={handleTransaction}
+        className='w-full flex gap-4 text-white py-6'>
+        {loading && <Shell color='#00F5FF' className='animate-spin' />}
+
+        Buy MAGIK
+      </Button>
+
+      {
+        isOpen && success && (
+          <ShowSuccessModal url={transactionUrl} amountTokens={amountTokens} isOpen={isOpen} setIsOpen={setIsOpen} />
+
+        )
+      }
+
+      {
+        isOpen && errorMessage && (
+          <ShowErrorModal isOpen={isOpen} setIsOpen={setIsOpen} />
+
+        )
+      }
     </div>
   )
 }
