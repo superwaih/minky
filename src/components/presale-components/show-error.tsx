@@ -4,7 +4,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { ExternalLinkIcon } from 'lucide-react'
 import { Fragment, useState } from 'react'
 
-const ShowErrorModal = ({ isOpen, setIsOpen} ) =>{
+const ShowErrorModal = ({ isOpen, setIsOpen} :IShowErrorModal ) =>{
    
 
     function closeModal() {

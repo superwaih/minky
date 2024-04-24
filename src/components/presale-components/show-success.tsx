@@ -4,7 +4,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { ExternalLinkIcon } from 'lucide-react'
 import { Fragment, useState } from 'react'
 
-const ShowSuccessModal = ({amountTokens, isOpen, setIsOpen, url}) =>{
+const ShowSuccessModal = ({amountTokens, isOpen, setIsOpen, url}: ShowSuccessModal) =>{
    
 
     function closeModal() {
