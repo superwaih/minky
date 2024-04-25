@@ -15,9 +15,9 @@ const WalletLayout = ({children} : PropsWithChildren) =>{
     const [balance, setBalance] = useState<number | null>(0);
     const endpoint = web3.clusterApiUrl('devnet');
     const wallets = [
-         new walletAdapterWallets.UnsafeBurnerWalletAdapter(),
-        // new walletAdapterWallets.PhantomWalletAdapter(),
-        // new walletAdapterWallets.SolflareWalletAdapter()
+        //  new walletAdapterWallets.UnsafeBurnerWalletAdapter(),
+        new walletAdapterWallets.PhantomWalletAdapter(),
+        new walletAdapterWallets.SolflareWalletAdapter()
     ];
     const { connection } = useConnection();
     const { publicKey } = useWallet();
