@@ -25,7 +25,7 @@ const Navbar = () => {
         <h1 className='text-brand-purple aclonica-regular text-lg lg:text-[30px]'>MAGIK</h1>
       </div>
       <WalletMultiButton
-        className='border-brand-cyan w-full  !rounded-[20px] bg hover:!bg-[#161b19] transition-all duration-200'
+        className='!border-brand-cyan w-full  !rounded-[20px] bg hover:!bg-[#161b19] transition-all duration-200'
       />
 
     </nav>

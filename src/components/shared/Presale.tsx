@@ -29,7 +29,7 @@ const Presale = () => {
   const [txSig, setTxSig] = useState('');
   const [amountTokens, setAmountTokens] = useState(null)
 
-  console.log('eror==>', error)
+  console.log('connection==>', connection)
   const TokenAddress: web3.PublicKey = `B4SQF4ctXsTZNGP1Aa6WPmMvJsgTsQY1PLjoTmVst8yE`
   const handleTransaction = async () => {
     if (!connection || !publicKey) {
@@ -90,7 +90,7 @@ const Presale = () => {
   }
 
   return (
-    <div className='p-8 mx-4 md:py-12 px-[20px] md:px-[50px] shadow-md bg-brand-black max-w-[800px] w-full space-y-8 rounded-[50px] border-brand-cyan border'>
+    <div className='p-8 m-9  md:py-12 px-[20px] md:px-[50px] shadow-md bg-brand-black max-w-[800px] w-full space-y-8 rounded-[50px] border-brand-cyan border'>
       <SliderInfo />
 
       <div className='flex flex-col space-y-4'>
