@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useMemo } from 'react'
 import SolanaLogo from '../icons/SolanaLogo'
 import { Button } from '../ui/button'
 import { Slider } from '../ui/slider'
@@ -18,11 +18,15 @@ const SliderInfo = () => {
 // }
 // const addree = getTokenBalanceWeb3(TOKEN_ADDRESS) 
 // console.log(addree)
+const calculatePercent = useMemo(() => {
+  const percent = 500/5000 * 100
+  return percent
+}, [])
   return (
     <div className='flex space-y-6 flex-col'>
          <h3 className='text-white text-center'>1 MGK = $0.0001</h3>
-      <p className='text-white flex-col flex md:flex-row gap-2 items-center text-center  text-[25px]'><span className='text-brand-cyan font-bold'>Amount Raised :</span> <span>$500 / $5,000,000</span></p>
-      <Slider defaultValue={[33]} max={100} step={1} />
+      <p className='text-white flex-col flex md:flex-row gap-2 items-center text-center  text-[25px]'><span className='text-brand-cyan font-bold'>Amount Raised :</span> <span>$5000 / $500,000</span></p>
+      <Slider disabled={true} value={[calculatePercent]}  max={100} step={1} />
       <div className='flex md:flex-row flex-col gap-4 items-center justify-center'>
         <Button
           variant={'secondary'}
