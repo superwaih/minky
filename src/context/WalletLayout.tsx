@@ -8,16 +8,17 @@ import '@solana/wallet-adapter-react-ui/styles.css'
 
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { PropsWithChildren, useEffect, useState } from 'react';
-
+const QUICKNODE_RPC = 'https://wiser-quick-breeze.solana-mainnet.quiknode.pro/57f11f6c08d1cff24525eeea61023cde215a90df/';
 
 
 const WalletLayout = ({children} : PropsWithChildren) =>{
     const [balance, setBalance] = useState<number | null>(0);
-    const endpoint = web3.clusterApiUrl('devnet');
+    const endpoint = QUICKNODE_RPC
+    // console.log(web3.clusterApiUrl('mainnet-beta'))
     const wallets = [
         //  new walletAdapterWallets.UnsafeBurnerWalletAdapter(),
         new walletAdapterWallets.PhantomWalletAdapter(),
-        new walletAdapterWallets.SolflareWalletAdapter()
+        // new walletAdapterWallets.SolflareWalletAdapter()
     ];
     const { connection } = useConnection();
     const { publicKey } = useWallet();

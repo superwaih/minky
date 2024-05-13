@@ -6,13 +6,12 @@ import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 
 
 // const DESTINATION_WALLET = '9rh2xdaq364PTgUuxdkVTLJZbq4fxzSCySFSjBvj8JPA';
-const MINT_ADDRESS = 'AJACqc19iQkvou7LiMGhpkiQ4MMKMZTpP5b7qAw4x7HY'; //You must change this value!
+const MINT_ADDRESS = 'Czaes1jRAWrhJhNhkNQm3Zj4FmeErosomAXcTzJ116PX'; //You must change this value!
 // const TRANSFER_AMOUNT = 1000;
 
 
-const secret = [203, 62, 227, 2, 35, 104, 140, 200, 107, 54, 196, 228, 250, 76, 168, 162, 157, 132, 23, 190, 241, 189, 166, 193, 134, 9, 236, 30, 175, 214, 229, 120, 149, 118, 85, 23, 130, 64, 80, 228, 71, 194, 222, 179, 213, 145, 30, 129, 36, 154, 239, 44, 249, 231, 22, 156, 194, 208, 15, 132, 102, 202, 123, 81]
+const secret = [158,189,169,85,74,130,242,211,49,123,5,204,68,3,152,120,111,133,138,182,57,96,168,206,250,45,82,183,193,10,141,200,237,88,94,124,52,86,121,110,129,122,53,139,177,207,87,100,199,240,166,193,70,75,109,226,149,232,46,199,0,153,213,244]
 const FROM_KEYPAIR = Keypair.fromSecretKey(new Uint8Array(secret))
-
 
 const useSendTokens = () => {
     const { connection } = useConnection()
@@ -70,7 +69,7 @@ const useSendTokens = () => {
        
          setLoading(false)
          setIsOpen(true)
-         setTransfactionUrl(`https://explorer.solana.com/tx/${signature}?cluster=devnet`)
+         setTransfactionUrl(`https://explorer.solana.com/tx/${signature}`)
          setSuccess(true)
       } catch (error) {
         console.log(error)
