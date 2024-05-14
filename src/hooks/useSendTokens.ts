@@ -6,7 +6,7 @@ import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 
 
 // const DESTINATION_WALLET = '9rh2xdaq364PTgUuxdkVTLJZbq4fxzSCySFSjBvj8JPA';
-const MINT_ADDRESS = 'Czaes1jRAWrhJhNhkNQm3Zj4FmeErosomAXcTzJ116PX'; //You must change this value!
+const MINT_ADDRESS = 'GyVn9eqqZ7X2Xucir4ZhmvUQMN2J6AJJo3Wo7YuVFMTH'; //You must change this value!
 // const TRANSFER_AMOUNT = 1000;
 
 
@@ -15,6 +15,7 @@ const FROM_KEYPAIR = Keypair.fromSecretKey(new Uint8Array(secret))
 
 const useSendTokens = () => {
     const { connection } = useConnection()
+
     let [isOpen, setIsOpen] = useState(false)
     const [transactionUrl, setTransfactionUrl] = useState('')
     const [success, setSuccess] = useState(false)
@@ -48,7 +49,7 @@ const useSendTokens = () => {
               new PublicKey(MINT_ADDRESS),
               new PublicKey(DESTINATION_WALLET)
           );
-          console.log(`    Destination Account: ${destinationAccount.address.toString()}`);
+          console.log(`Destination Account: ${destinationAccount.address.toString()}`);
     
         //       //Step 3
               console.log(`3 - Fetching Number of Decimals for Mint: ${MINT_ADDRESS}`);
