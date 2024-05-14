@@ -29,7 +29,7 @@ const Presale = () => {
   const [txSig, setTxSig] = useState('');
   const [amountTokens, setAmountTokens] = useState(null)
 
-  const TokenAddress: web3.PublicKey = `Zr7KuVXjnomFduozoFrXQFp37TNmetAGz9iWp6xV3ic`
+  const TokenAddress: web3.PublicKey = `GyVn9eqqZ7X2Xucir4ZhmvUQMN2J6AJJo3Wo7YuVFMTH`
   const handleTransaction = async () => {
     if (!connection || !publicKey) {
       toast({
