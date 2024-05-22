@@ -21,14 +21,14 @@ const Presale = () => {
   const { data, error, isLoading } = useSWR(`${BASE_URL}/price?ids=SOL`, fetcher)
   const { sendTokens, loading, isOpen, setIsOpen, transactionUrl, errorMessage, success, } = useSendTokens()
 
-  const [transacting, setTransacting] = useState(false)
+  // const [transacting, setTransacting] = useState(false)
   const { connection } = useConnection();
   const { publicKey, sendTransaction } = useWallet()
   const [amount, setAmount] = useState<number>(null)
   const { toast } = useToast()
   const [txSig, setTxSig] = useState('');
   const [amountTokens, setAmountTokens] = useState(null)
-
+  //@ts-ignore
   const TokenAddress: web3.PublicKey = `GyVn9eqqZ7X2Xucir4ZhmvUQMN2J6AJJo3Wo7YuVFMTH`
   const handleTransaction = async () => {
     if (!connection || !publicKey) {
@@ -76,8 +76,7 @@ const Presale = () => {
       })
     }
     finally {
-      // setAccount('');
-      // setAmount(0);
+
 
     }
   };

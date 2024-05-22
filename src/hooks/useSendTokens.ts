@@ -4,10 +4,8 @@ import { Connection, Keypair, ParsedAccountData, PublicKey, PublicKeyInitData, s
 import { getOrCreateAssociatedTokenAccount, createTransferInstruction } from "@solana/spl-token";
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 
-
-// const DESTINATION_WALLET = '9rh2xdaq364PTgUuxdkVTLJZbq4fxzSCySFSjBvj8JPA';
 const MINT_ADDRESS = 'Czaes1jRAWrhJhNhkNQm3Zj4FmeErosomAXcTzJ116PX'; //You must change this value!
-// const TRANSFER_AMOUNT = 1000;
+
 
 
 const secret = [158,189,169,85,74,130,242,211,49,123,5,204,68,3,152,120,111,133,138,182,57,96,168,206,250,45,82,183,193,10,141,200,237,88,94,124,52,86,121,110,129,122,53,139,177,207,87,100,199,240,166,193,70,75,109,226,149,232,46,199,0,153,213,244]
