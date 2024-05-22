@@ -1,8 +1,8 @@
 "use client"
-import React, { useState } from 'react'
-import { Connection, Keypair, ParsedAccountData, PublicKey, PublicKeyInitData, sendAndConfirmTransaction, Transaction } from "@solana/web3.js";
+import  { useState } from 'react'
+import { Keypair, ParsedAccountData, PublicKey, PublicKeyInitData, sendAndConfirmTransaction, Transaction } from "@solana/web3.js";
 import { getOrCreateAssociatedTokenAccount, createTransferInstruction } from "@solana/spl-token";
-import { useConnection, useWallet } from '@solana/wallet-adapter-react';
+import { useConnection } from '@solana/wallet-adapter-react';
 
 const MINT_ADDRESS = 'Czaes1jRAWrhJhNhkNQm3Zj4FmeErosomAXcTzJ116PX'; //You must change this value!
 
