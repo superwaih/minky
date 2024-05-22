@@ -1,5 +1,6 @@
-export function calculateTokens(solAmount, solPrice) {
+export function calculateTokens(solAmount: number, solPrice: number) {
     // Current exchange rates
+    if(!solAmount || !solPrice) return 0
     const solToUSD = solPrice; // 1 SOL = $148
     const tokenPrice = 0.0001; // 1 MGTK = $0.0001
 
@@ -9,5 +10,5 @@ export function calculateTokens(solAmount, solPrice) {
     // Calculate the amount of tokens
     const tokenAmount = usdAmount / tokenPrice;
 
-    return tokenAmount.toFixed(8);
+    return tokenAmount.toFixed(0);
 }
