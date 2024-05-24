@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button } from '../ui/button'
 import * as web3 from '@solana/web3.js';
 
@@ -16,20 +16,32 @@ import SliderInfo from '../presale-components/SliderInfo'
 import RecieveTokens from '../presale-components/receive-tokens'
 import ShowSuccessModal from '../presale-components/show-success';
 import ShowErrorModal from '../presale-components/show-error';
+import { sign } from 'crypto';
 
 const Presale = () => {
   const { data, error, isLoading } = useSWR(`${BASE_URL}/price?ids=SOL`, fetcher)
   const { sendTokens, loading, isOpen, setIsOpen, transactionUrl, errorMessage, success, } = useSendTokens()
 
-  // const [transacting, setTransacting] = useState(false)
   const { connection } = useConnection();
   const { publicKey, sendTransaction } = useWallet()
   const [amount, setAmount] = useState<number>(null)
   const { toast } = useToast()
+  const [balance, setBalance] = useState(0);
+
   const [txSig, setTxSig] = useState('');
   const [amountTokens, setAmountTokens] = useState(null)
   //@ts-ignore
   const TokenAddress: web3.PublicKey = `GyVn9eqqZ7X2Xucir4ZhmvUQMN2J6AJJo3Wo7YuVFMTH`
+  useEffect(() => {
+    const getInfo = async () => {
+        if (connection && publicKey) {
+            const info = await connection.getAccountInfo(publicKey);
+            setBalance(info.lamports / web3.LAMPORTS_PER_SOL);
+        }
+    };
+    getInfo();
+}, [connection, publicKey]);
+  
   const handleTransaction = async () => {
     if (!connection || !publicKey) {
       toast({
@@ -48,7 +60,14 @@ const Presale = () => {
       })
       return;
     }
-
+    if(balance < amount || balance === 0 || balance === amount ){
+      toast({
+        variant: "destructive",
+        title: "Insufficient Balance",
+        description: `Your ${balance} Sol is currently insufficent. Top up your balance to purchase presale`,
+      })
+      return
+    }
     const transaction = new web3.Transaction();
     const instruction = web3.SystemProgram.transfer({
       fromPubkey: publicKey,
@@ -57,10 +76,11 @@ const Presale = () => {
     });
 
     transaction.add(instruction);
-
+   
     try {
       const signature = await sendTransaction(transaction, connection);
       setTxSig(signature)
+      console.log()
       sendTokens(amountTokens, publicKey)
       toast({
         title: "Deposit Successful!",
@@ -75,11 +95,8 @@ const Presale = () => {
         description: "There was a problem with your request.",
       })
     }
-    finally {
-
-
-    }
   };
+ 
 
   const handleAmountChange = (e: any) => {
     const tokens = calculateTokens(e.target.value, data?.data?.SOL.price);
