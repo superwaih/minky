@@ -8,7 +8,7 @@ import '@solana/wallet-adapter-react-ui/styles.css'
 
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { PropsWithChildren, useEffect, useState } from 'react';
-const QUICKNODE_RPC = 'https://mainnet.helius-rpc.com/?api-key=36a7a680-9ce9-4626-859d-d2f85c644f10';
+const QUICKNODE_RPC = 'https://wiser-quick-breeze.solana-mainnet.quiknode.pro/57f11f6c08d1cff24525eeea61023cde215a90df/';
 
 
 const WalletLayout = ({children} : PropsWithChildren) =>{
