@@ -58,9 +58,9 @@ const useSendTokens = () => {
         ),
       ]);
 
-      console.log(`Source Account: ${sourceAccount.address.toString()}`);
-      console.log(`Destination Account: ${destinationAccount.address.toString()}`);
-      console.log(`Number of Decimals: 9}`);
+      // console.log(`Source Account: ${sourceAccount.address.toString()}`);
+      // console.log(`Destination Account: ${destinationAccount.address.toString()}`);
+      // console.log(`Number of Decimals: 9}`);
 
       const latestBlockHash = await connection.getLatestBlockhash("confirmed");
 
