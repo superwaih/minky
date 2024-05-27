@@ -10,13 +10,12 @@ import { useToast } from "@/components/ui/use-toast"
 import { BASE_URL, fetcher } from '../../../utils/fetcher'
 import useSWR from 'swr'
 import { calculateTokens } from '../../../utils/helper'
-import useSendTokens from '@/hooks/useSendTokens'
+import useSendTokens from '@/contracts/useSendTokens'
 import { Shell } from 'lucide-react'
 import SliderInfo from '../presale-components/SliderInfo'
 import RecieveTokens from '../presale-components/receive-tokens'
 import ShowSuccessModal from '../presale-components/show-success';
 import ShowErrorModal from '../presale-components/show-error';
-import { sign } from 'crypto';
 
 const Presale = () => {
   const { data, error, isLoading } = useSWR(`${BASE_URL}/price?ids=SOL`, fetcher)
