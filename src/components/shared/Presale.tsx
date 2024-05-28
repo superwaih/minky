@@ -26,20 +26,23 @@ const Presale = () => {
   const [amount, setAmount] = useState<number>(null)
   const { toast } = useToast()
   const [balance, setBalance] = useState(0);
+  const TokenAddress: web3.PublicKey = `GyVn9eqqZ7X2Xucir4ZhmvUQMN2J6AJJo3Wo7YuVFMTH`
 
   const [txSig, setTxSig] = useState('');
+ 
   const [amountTokens, setAmountTokens] = useState(null)
   //@ts-ignore
-  const TokenAddress: web3.PublicKey = `GyVn9eqqZ7X2Xucir4ZhmvUQMN2J6AJJo3Wo7YuVFMTH`
   useEffect(() => {
     const getInfo = async () => {
         if (connection && publicKey) {
             const info = await connection.getAccountInfo(publicKey);
             setBalance(info.lamports / web3.LAMPORTS_PER_SOL);
+           
         }
+        
     };
     getInfo();
-}, [connection, publicKey]);
+}, [connection,  publicKey]);
   
   const handleTransaction = async () => {
     if (!connection || !publicKey) {

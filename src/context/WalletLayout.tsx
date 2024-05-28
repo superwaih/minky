@@ -8,6 +8,7 @@ import '@solana/wallet-adapter-react-ui/styles.css'
 
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { PropsWithChildren, useEffect, useState } from 'react';
+
 const QUICKNODE_RPC = 'https://wiser-quick-breeze.solana-mainnet.quiknode.pro/57f11f6c08d1cff24525eeea61023cde215a90df/';
 
 
@@ -33,6 +34,8 @@ const WalletLayout = ({children} : PropsWithChildren) =>{
         getInfo();
         // the code above will execute whenever these variables change in any way
     }, [connection, publicKey]);
+  
+    
 
     return(
 <>
