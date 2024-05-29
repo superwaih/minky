@@ -27,19 +27,19 @@ export default function RootLayout({
 }>) {
   return (
 
-    <WalletLayout>
-
-
-      <html lang="en">
+    
+    
+    <html lang="en">
         <body className={cn(
           inter.className, deacon.variable
 
         )}>
+        <WalletLayout>
 
           {children}
           <Toaster />
+    </WalletLayout>
           </body>
       </html>
-    </WalletLayout>
   );
 }

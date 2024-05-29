@@ -23,10 +23,11 @@ const Presale = () => {
 
   const { connection } = useConnection();
   const { publicKey, sendTransaction } = useWallet()
-  const [amount, setAmount] = useState<number>(null)
+  //@ts-ignore
+  const [amount, setAmount] = useState<number >(null)
   const { toast } = useToast()
   const [balance, setBalance] = useState(0);
-  const TokenAddress: web3.PublicKey = `GyVn9eqqZ7X2Xucir4ZhmvUQMN2J6AJJo3Wo7YuVFMTH`
+  const TokenAddress =new web3.PublicKey(`GyVn9eqqZ7X2Xucir4ZhmvUQMN2J6AJJo3Wo7YuVFMTH`)
 
   const [txSig, setTxSig] = useState('');
  
@@ -36,13 +37,14 @@ const Presale = () => {
     const getInfo = async () => {
         if (connection && publicKey) {
             const info = await connection.getAccountInfo(publicKey);
-            setBalance(info.lamports / web3.LAMPORTS_PER_SOL);
-           
+            if(info){
+              setBalance(info.lamports / web3.LAMPORTS_PER_SOL);
+            }  
         }
         
     };
     getInfo();
-}, [connection,  publicKey]);
+}, [connection,  publicKey, txSig]);
   
   const handleTransaction = async () => {
     if (!connection || !publicKey) {
@@ -82,7 +84,6 @@ const Presale = () => {
     try {
       const signature = await sendTransaction(transaction, connection);
       setTxSig(signature)
-      console.log()
       sendTokens(amountTokens, publicKey)
       toast({
         title: "Deposit Successful!",
@@ -102,13 +103,14 @@ const Presale = () => {
 
   const handleAmountChange = (e: any) => {
     const tokens = calculateTokens(e.target.value, data?.data?.SOL.price);
+    //@ts-ignore
     setAmountTokens(tokens)
     setAmount(e.target.value)
   }
 
   return (
     <div className='p-8 m-9  md:py-12 px-[20px] md:px-[50px] shadow-md bg-brand-black max-w-[800px] w-full space-y-8 rounded-[50px] border-brand-cyan border'>
-      <SliderInfo />
+      <SliderInfo walletBalance={balance} />
 
       <div className='flex flex-col space-y-4'>
         <h3 className='text-white'>Amount you pay :</h3>
